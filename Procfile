@@ -1,1 +1,1 @@
-web: gunicorn fathomless-reef-10741.wsgi
+web: gunicorn project.wsgi
