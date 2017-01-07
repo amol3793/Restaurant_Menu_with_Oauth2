@@ -513,11 +513,11 @@ def delAllMenu(restaurant_id):
     return render_template('deleteMenuItem.html',item = menuToDelete)
 
 
-
+app.secret_key = 'super_secret_key'
+app.config['SESSION_TYPE'] = 'filesystem'
 
 if __name__ == '__main__':
-  app.secret_key = 'super_secret_key'
-  app.config['SESSION_TYPE'] = 'filesystem'
+  
   app.debug = True
  # app.run(host = '0.0.0.0', port = 5000)
   HOST = environ.get('SERVER_HOST', 'localhost')
