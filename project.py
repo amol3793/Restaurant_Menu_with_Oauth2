@@ -396,6 +396,11 @@ def editRestaurant(restaurant_id):
   else:
     return render_template('editRestaurant.html', restaurant = editedRestaurant)
 
+@app.route('/zomatoSearch/')
+
+def zomatoSearch():
+
+    return render_template('zomato.html')
 
 #Delete a restaurant
 @app.route('/restaurant/<int:restaurant_id>/delete/', methods = ['GET','POST'])
