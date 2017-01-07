@@ -1,0 +1,152 @@
+{% extends "main_new.html" %}
+{% block content %}
+  
+
+    <!-- Page Content -->
+
+<div class="intro-header">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <p> &emsp;</p>
+                    <p> &emsp;</p>
+                       <div class='flash'>
+                            {% with messages = get_flashed_messages() %}
+                            {% if messages %}
+
+                            <ul>
+                                {% for message in messages %}
+                                <li> <strong> {{ message }} </strong> </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            {% endwith %}
+                        </div>
+                    
+                   
+                    
+                        <div class="row banner menu">
+                            <div class="col-md-7 col-md-offset-4 padding-none">
+                                <h1>
+                                    {{ USER['username'] }}
+                                    <figure class="creator">
+                                        <img src="{{USER['picture']}}" style = "width: 210px; height: 210px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> 
+                                        
+                                    </figure>
+                                </h1>
+                            </div>
+                        </div>
+                    
+                        
+
+    
+    
+                    
+                </div>
+            </div>
+        </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="content-section-b"> 
+    
+
+       <div >
+                          <div class="col-md-10 col-md-offset-1 padding-none">
+                            <a href="{{url_for('newRestaurant')}}">
+                                <button class="btn btn-default" id="new-restaurant">
+                                    <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>GET STARTED BY ADDING YOUR RESTAURANT HERE
+                                </button>
+                            </a>
+                            <!--<a href="{{url_for('delAllRestaurant')}}">
+                                <button class="btn btn-default" id="delAll-restaurant">
+                                    <span class="glyphicon glyphicon-cutlery" aria-hidden="true"></span>Delete All Restaurant
+                                </button>
+                            </a>-->
+                            </div>
+                         </div>
+
+</div>
+
+<div class="content-section-a">
+
+           
+
+
+</div>
+
+    {% for restaurant in restaurants %}
+
+	
+	
+     <div class="content-section-a">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 col-sm-6">
+                    <hr class="section-heading-spacer">
+                    <div class="clearfix"></div>
+                    <h1 class="section-heading">
+                        <a href="{{url_for('showMenu', restaurant_id = restaurant.id)}}">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10 restaurant-list">
+                                    <h2>{{restaurant.name}}</h2>
+                                    
+                                </div>
+                                <div class="col-md-1"></div>
+                                
+                            </div>
+                        </a>
+                    </h1>
+                   
+                </div>
+                <div class="col-lg-5 col-lg-offset-2 col-sm-6">
+                    
+                  <hr class="section-heading-spacer">  
+                   <figure>
+                    
+                    <img  src="{{getUserInfo(getCreatorInfo(restaurant.name)).picture}}" alt="" width="150" height="150" shape="circle"><figcaption><h3>creator : {{ getUserInfo(getCreatorInfo(restaurant.name)).name }}</h3></figcaption>
+                       
+                    </figure>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.content-section-a -->
+
+    <div>
+
+    </div>
+    <!-- /.content-section-b -->
+    
+    {% endfor %}
+    
+    
+
+
+    
+
+    <!-- jQuery -->
+    <script src="static/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="static/js/bootstrap.min.js"></script>
+
+
+
+	
+{% endblock %}

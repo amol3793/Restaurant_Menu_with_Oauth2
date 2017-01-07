@@ -1,0 +1,38 @@
+﻿{%extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<div>
+    {% if restaurant==None %}
+    <h2>There are no restaurants to delete</h2>
+    
+    {% else %}
+    <h2>Are you Sure you want to delete all following restaurant?</h2>
+    <ul>
+
+        {% for r in restaurant %}
+        <li>
+            {{r.name}}
+
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+
+
+<form action="#" method='post'>
+
+    <button type="submit" class="btn btn-default delete" id="submit" type="submit">
+        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete
+    </button>
+    <a href='{{url_for('showRestaurants')}}'>
+        <button class="btn btn-default delete">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+        </button>
+    </a>
+
+</form>
+
+
+{% endblock %}

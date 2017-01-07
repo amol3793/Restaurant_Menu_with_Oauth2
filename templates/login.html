@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Login-Restaurant Hub</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="static/css/landing-page.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="static/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    
+     <!--LOAD PRE-REQUISITES FOR GOOGLE SIGN IN -->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js">
+    </script>
+
+    <script src="//apis.google.com/js/platform.js?onload=start"> </script>
+
+    <!-- END PRE-REQUISITES FOR GOOGLE SIGN IN -->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="{{url_for('showRestaurants')}}">Show All Restaurants</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="#about">Login Here</a>
+                    </li>
+                    <li>
+                        <a href="{{url_for('showRestaurants')}}"     >Restaurants</a>
+                    </li>
+                    <li>
+                        <a href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
+    <!-- Header -->
+    <a name="about"></a>
+    <div class="intro-header">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="intro-message">
+                        <h1>RESTAURANT   HUB</h1>
+                        <h3>Login with Oauth providers </h3>
+                        <hr class="intro-divider">
+                        
+                        <table id ="tablesignin">
+                        <ul class="list-inline intro-social-buttons">
+                            
+                            <!-- GOOGLE PLUS SIGN IN-->
+                                <div id="signInButton2">
+                                        <span class="g-signin"      
+                                              data-scope="openid email"
+                                              data-clientid="811053788824-85q03sqt0s5ita8g49sopbcdorms68ho.apps.googleusercontent.com"
+                                              data-redirecturi="postmessage"
+                                              data-accesstype="online"
+                                              data-cookiepolicy="single_host_origin"
+                                              data-callback="signInCallback"
+                                              data-approvalprompt="force">
+                                        </span>
+                                    </div>
+                             </ul>
+                      
+                        
+                          <ul class="list-inline intro-social-buttons">   
+                              <div>
+                            <div class="fb-login-button" data-max-rows="2" scope="public_profile,email" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true" onlogin="sendTokenToServer();">
+                                
+                            </div>    
+                            
+                            </div>
+                        </ul>
+                        </table>
+                        
+                            <table>
+                                
+                            <ul class="list-inline intro-social-buttons">
+                                <div id="result"></div>
+                            </ul>
+                            
+                          
+                            
+                            </table>
+                          
+                        
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container -->
+
+    </div>
+    <!-- /.intro-header -->
+
+    <!-- Page Content -->
+    
+    
+    
+    
+
+
+    <!-- jQuery -->
+    <script src="static/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="static/js/bootstrap.min.js"></script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+     <!-- GOOGLE PLUS SIGN IN-->
+
+
+    
+
+    <div id="result"></div>
+
+    
+    
+<!-- GOOGLE PLUS SIGN IN-->
+    
+    <script>
+        function signInCallback(authResult) {
+            if (authResult['code']) {
+                // Hide the sign-in button now that the user is authorized
+                $('#signinButton').attr('style', 'display: none');
+                // Send the one-time-use code to the server, if the server responds, write a 'login successful' message to the web page and then redirect back to the main restaurants page
+                $.ajax({
+                    type: 'POST',
+                    url: '/gconnect?state={{STATE}}',
+                    processData: false,
+                    data: authResult['code'],
+                    contentType: 'application/octet-stream; charset=utf-8',
+                    success: function (result) {
+                        // Handle or verify the server response if necessary.
+                        if (result) {
+                            $('#result').html('Login Successful!</br>' + result + '</br>Redirecting...')
+                            setTimeout(function () {
+                                window.location.href = "/restaurant";
+                                { { url_for('showRestaurants') } }
+                            }, 4000);
+
+                        } else if (authResult['error']) {
+                            console.log('There was an error: ' + authResult['error']);
+                        } else {
+                            $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+                        }
+                    }
+
+                });
+            }
+        }
+    </script>
+
+
+    
+    <!--END GOOGLE PLUS SIGN IN -->
+    
+     <!--FACEBOOK SIGN IN -->
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                appId: '640646162758455',
+                cookie: true,  // enable cookies to allow the server to access
+                // the session
+                xfbml: true,  // parse social plugins on this page
+                version: 'v2.2' // use version 2.2
+            });
+        };
+        // Load the SDK asynchronously
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+        // Here we run a very simple test of the Graph API after login is
+        // successful.  See statusChangeCallback() for when this call is made.
+        function sendTokenToServer() {
+            var access_token = FB.getAuthResponse()['accessToken'];
+            //console.log(access_token)
+            //console.log('Welcome!  Fetching your information.... ');
+            FB.api('/me', function (response) {
+               // console.log('Successful login for: ' + response.name);
+                $('#tablesignin').attr('style', 'display: none');
+               // $('#result').html('Successful FBlogin for: ' + response.name )
+                $.ajax({
+                    type: 'POST',
+                    url: '/fbconnect?state={{STATE}}',
+                    processData: false,
+                    data: access_token,
+                    contentType: 'application/octet-stream; charset=utf-8',
+                    success: function (result) {
+                        // Handle or verify the server response if necessary.
+                        if (result) {
+                            $('#result').html('Login Successful!</br>' + result + '</br>Just fetching your data from facebook....')
+                            setTimeout(function () {
+                                window.location.href = "/restaurant";
+                            }, 6000);
+
+                        } else {
+                            $('#result').html('Failed to make a server-side call. Check your configuration and console.');
+                        }
+                    }
+
+                });
+            });
+        }
+    </script>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.6&appId=640646162758455";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+    
+    
+    
+    
+    
+    
+    
+    
+     <!--END FACEBOOK SIGN IN -->
+
+</body>
+
+</html>
